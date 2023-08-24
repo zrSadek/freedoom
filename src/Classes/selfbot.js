@@ -62,7 +62,7 @@ module.exports = class Selfbot extends Client {
                 )
             } catch (e) {}
     
-            if(this.config.settings.autoJoinVoiceChannel?.channel) {
+            if(this.config.settings.autoJoinVoiceChannel?.stream) {
                 try {
                     const streamConnection = await voiceConnection.createStream().catch;
                     StreamClient.createPlayer(

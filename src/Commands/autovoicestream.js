@@ -15,7 +15,7 @@ module.exports = {
         client.refreshVoice()
 
         setTimeout(() => {
-            message.edit({ content: "The stream will no be " + (client.config.settings.autoJoinVoiceChannel.stream ? "enabled" : "disabled")})
+            message.edit({ content: "The stream will now be " + (client.config.settings.autoJoinVoiceChannel.stream ? "enabled" : "disabled")})
         }, client.config.interval);
 
         

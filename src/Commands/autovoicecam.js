@@ -15,7 +15,7 @@ module.exports = {
         client.refreshVoice()
 
         setTimeout(() => {
-            message.edit({ content: "The facecam will no be " + (client.config.settings.autoJoinVoiceChannel.facecam ? "enabled" : "disabled")})
+            message.edit({ content: "The facecam will now be " + (client.config.settings.autoJoinVoiceChannel.facecam ? "enabled" : "disabled")})
         }, client.config.interval);
 
         

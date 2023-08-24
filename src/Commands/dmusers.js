@@ -3,7 +3,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 module.exports = {
     name: "dmusers",
-    description: "DM all members from a guild",
+    description: "DM all the users cached",
     /**
      * @param {Selfbot} client 
      */
