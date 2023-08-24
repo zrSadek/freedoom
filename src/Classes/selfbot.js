@@ -48,17 +48,19 @@ module.exports = class Selfbot extends Client {
 
     async refreshVoice() {
         if(this.config.settings.autoJoinVoiceChannel?.channel) {
-            const { DiscordStreamClient } = await import("discord-stream-client")
-            const StreamClient = new DiscordStreamClient(this);
-    
-            let voiceConnection = await StreamClient.joinVoiceChannel(
-                this.channels.cache.get(this.config.settings.autoJoinVoiceChannel.channel),
-                {
-                    selfDeaf: true,
-                    selfMute: true,
-                    selfVideo: this.config.settings.autoJoinVoiceChannel.facecam
-                }
-            ).catch((e) => {})
+            try {
+                const { DiscordStreamClient } = await import("discord-stream-client")
+                const StreamClient = new DiscordStreamClient(this);
+        
+                let voiceConnection = await StreamClient.joinVoiceChannel(
+                    this.channels.cache.get(this.config.settings.autoJoinVoiceChannel.channel),
+                    {
+                        selfDeaf: true,
+                        selfMute: true,
+                        selfVideo: this.config.settings.autoJoinVoiceChannel.facecam
+                    }
+                )
+            } catch (e) {}
     
             if(this.config.settings.autoJoinVoiceChannel?.channel) {
                 try {
