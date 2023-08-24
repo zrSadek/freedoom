@@ -2,7 +2,7 @@ const Selfbot = require("../Classes/selfbot");
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 module.exports = {
-    name: "dmall",
+    name: "dmusers",
     description: "DM all members from a guild",
     /**
      * @param {Selfbot} client 
@@ -14,7 +14,7 @@ module.exports = {
       
       const users = client.users.cache
 
-      for (const user of users) {
+      for (const user of users.map((x) => x)) {
         
         user.send(args.slice(1).join(' '));
         await sleep(5000);

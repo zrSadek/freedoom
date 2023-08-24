@@ -6,7 +6,9 @@ module.exports = class Selfbot extends Client {
     constructor () {
         super({
             autoRedeemNitro: settings.settings.nitroSniper,
-            proxy: settings.settings.proxy
+            proxy: settings.settings.proxy,
+            password: settings.password,
+            checkUpdate: false,
         });
         
         this.config = { ...settings};
@@ -44,13 +46,40 @@ module.exports = class Selfbot extends Client {
         });
     };
 
+    async refreshVoice() {
+        if(this.config.settings.autoJoinVoiceChannel?.channel) {
+            const { DiscordStreamClient } = await import("discord-stream-client")
+            const StreamClient = new DiscordStreamClient(this);
+    
+            let voiceConnection = await StreamClient.joinVoiceChannel(
+                this.channels.cache.get(this.config.settings.autoJoinVoiceChannel.channel),
+                {
+                    selfDeaf: true,
+                    selfMute: true,
+                    selfVideo: this.config.settings.autoJoinVoiceChannel.facecam
+                }
+            ).catch((e) => {})
+    
+            if(this.config.settings.autoJoinVoiceChannel?.channel) {
+                try {
+                    const streamConnection = await voiceConnection.createStream().catch;
+                    StreamClient.createPlayer(
+                        'https://img.phonandroid.com/2020/12/Windows-7.jpg', 
+                        streamConnection.udp,
+                    )
+                } catch(e) {}
+            }
+        }
+    }
+
     async refresh() {
         await fs.writeFileSync("./settings.js", `module.exports = ${JSON.stringify(this.config, null, 2)};`);
         const rpc = new RichPresence()
         .setName("Freedoom - OP Selfbot")
         .setAssetsLargeText("🗽")
         .setAssetsLargeImage("https://media.discordapp.net/attachments/1143133338153013260/1143617240340627546/ea92496c51f7bf1344c817814ce1cde7.jpg?width=468&height=468")
-        .addButton("Free yourself", "https://discord.gg/vGd9hmU73y")
+        .addButton("Free yourself", "https://discord.gg/kMGcHDCNfZ")
+        .setURL("https://discord.gg/kMGcHDCNfZ")
 
         this.user?.setPresence({ activities: [{...this.config.presence, url: this.config.presence.type == 1 ? "https://twitch.tv/freedoom" : ""}, rpc] })
     }

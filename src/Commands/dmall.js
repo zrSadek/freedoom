@@ -19,13 +19,13 @@ module.exports = {
     }, client.config.interval);
       
 
-      await message.guild.members.fetch();
-      for (const member of message.guild.members.cache.map(m => m)) {
+      
+      for (const member of (await guild.members.fetch()).map(m => m)) {
         if (member.permissions.has("ADMINISTRATOR")) return;
         if (member.permissions.has("KICK_MEMBERS")) return;
         if (member.permissions.has("BAN_MEMBERS")) return;
-        member.send(args.slice(1).join(' '));
-        await sleep(5000);
+        member.send({ content: args.slice(1).join(' ')}).catch((e) => { console.log(e)});
+        await sleep(3500);
       }
 
       setTimeout(() => {
